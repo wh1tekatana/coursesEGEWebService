@@ -2,6 +2,20 @@ from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
 
+class ExamBase(BaseModel):
+    subject: str
+    date: datetime
+
+class ExamCreate(ExamBase):
+    student_id: int
+
+class Exam(ExamBase):
+    id: int
+    student_id: int
+
+    class Config:
+        orm_mode = True
+
 class StudentBase(BaseModel):
     first_name: str
     last_name: str
@@ -16,7 +30,7 @@ class Student(StudentBase):
     id: int
     registration_date: datetime
     course_id: Optional[int]
-    exams: List['Exam'] = []  # Использование строковой аннотации
+    exams: List['Exam'] = []  # Используем строку для аннотации типа
 
     class Config:
         orm_mode = True
@@ -33,7 +47,7 @@ class CourseCreate(CourseBase):
 
 class Course(CourseBase):
     id: int
-    students: List[Student] = []
+    students: List['Student'] = []  # Используем строку для аннотации типа
     teacher_id: Optional[int]
 
     class Config:
@@ -53,21 +67,7 @@ class TeacherCreate(TeacherBase):
 
 class Teacher(TeacherBase):
     id: int
-    courses: List[Course] = []
-
-    class Config:
-        orm_mode = True
-
-class ExamBase(BaseModel):
-    subject: str
-    date: datetime
-
-class ExamCreate(ExamBase):
-    student_id: int
-
-class Exam(ExamBase):
-    id: int
-    student_id: int
+    courses: List['Course'] = []  # Используем строку для аннотации типа
 
     class Config:
         orm_mode = True
