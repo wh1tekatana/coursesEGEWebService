@@ -16,7 +16,7 @@ class Student(StudentBase):
     id: int
     registration_date: datetime
     course_id: Optional[int]
-    exams: List["Exam"] = []
+    exams: List['Exam'] = []  # Использование строковой аннотации
 
     class Config:
         orm_mode = True
@@ -50,7 +50,6 @@ class TeacherCreate(TeacherBase):
 
     class Config:
         orm_mode = True
-
 
 class Teacher(TeacherBase):
     id: int
