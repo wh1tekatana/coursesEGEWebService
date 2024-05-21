@@ -15,7 +15,7 @@ class Student(Base):
     registration_date = Column(DateTime, default=datetime.utcnow)
     course_id = Column(Integer, ForeignKey("courses.id"))
     course = relationship("Course", back_populates="students")
-    exams = relationship("Exam", back_populates="student")
+    exams = relationship("Exam", order_by="Exam.id", back_populates="student")
 
 class Course(Base):
     __tablename__ = "courses"
